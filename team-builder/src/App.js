@@ -1,16 +1,37 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import './components/TeamForm.js'
+import Form from './Components/Form';
 
 function App() {
   // create State variables.
-  const []
+  const [members, setMembers] = useState([]);
   //create and update forms. 
+  const [values, setValues] = useState({name: '', email: '', role: ''});
 
+  const onSubmit = () => {
+    setMembers([values, ...members]);
+    setValues({name: '', email: '', role: ''})
+  }
+
+  const onChange = (name, value) =>{
+    setValues({...values, [name]: value})
+  }
   return (
     <div className="App">
       <h1> Team Builder App!</h1>
+      <Form
+        values={values}
+        change ={onChange}
+        submit ={onSubmit}
+      />
+      {members.map((member, id) => {
+        return (
+          <div key ={id}>
+            {member.email}, {member.name}, {member.role}
+          </div>
+        )
+      })}
     </div>
   );
 }
